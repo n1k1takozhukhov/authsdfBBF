@@ -15,7 +15,7 @@ enum AuthPhase {
 struct AuthState {
     var phase: AuthPhase = .phoneInput
     var phoneNumber: String = ""
-    var code: [String] = Array(repeating: "", count: 6)
+    var code: [String] = Array(repeating: "", count: 5)
     var isPhoneNumberValid: Bool = false
     var isCodeValid: Bool = false
     var error: String? = nil

@@ -35,19 +35,25 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    //MARK: - Register
+    func registerButton() {
+        print("Зарегистрироваться")
+    }
+    
+    
     // MARK: - Code
     func updateCode(at index: Int, value: String) {
-        guard index < 4 else { return }
+        guard index < 5 else { return }
         let filtered = String(value.prefix(1).filter { $0.isNumber })
         state.code[index] = filtered
-        state.isCodeValid = state.code.joined().count == 4
+        state.isCodeValid = state.code.joined().count == 5
         state.error = nil
     }
     
     func verifyCode() {
         let code = state.code.joined()
         print("[Auth] Проверка кода: \(code)")
-        if code == "1234" {
+        if code == "12345" {
             print("[Auth] Код верный — успех!")
             state.error = nil
         } else {
@@ -58,7 +64,7 @@ class AuthViewModel: ObservableObject {
     
     func resendCode() {
         print("[Auth] Повторная отправка кода на номер: \(state.phoneNumber)")
-        state.code = Array(repeating: "", count: 4)
+        state.code = Array(repeating: "", count: 5)
         state.error = nil
         sendCode()
     }
@@ -82,23 +88,46 @@ class AuthViewModel: ObservableObject {
     }
     
     // MARK: - Utils
-    private func formatPhone(_ value: String) -> String {
-        // Маска +7 XXX XXX-XX-XX
-        let digits = value.filter { $0.isNumber }
-        var result = "+7"
-        var index = digits.startIndex
-        if digits.count > 1 {
-            result += " "
-            for i in 0..<10 {
-                if index == digits.endIndex { break }
-                if i == 3 || i == 6 { result += "-" }
-                if i == 0 || i == 3 || i == 6 { result += " " }
-                result.append(digits[index])
-                index = digits.index(after: index)
+    // ... existing code ...
+        private func formatPhone(_ value: String) -> String {
+            // Маска +7 XXX XXX-XX-XX
+            let digits = value.filter { $0.isNumber }
+            let limitedDigits: String
+            if digits.hasPrefix("7") {
+                limitedDigits = String(digits.prefix(11))
+            } else if digits.hasPrefix("8") {
+                limitedDigits = "7" + String(digits.dropFirst().prefix(10))
+            } else {
+                limitedDigits = "7" + String(digits.prefix(10))
             }
+            var result = "+7"
+            let chars = Array(limitedDigits)
+            if chars.count > 1 {
+                result += " "
+                for i in 1..<min(chars.count, 4) {
+                    result.append(chars[i])
+                }
+            }
+            if chars.count > 4 {
+                result += " "
+                for i in 4..<min(chars.count, 7) {
+                    result.append(chars[i])
+                }
+            }
+            if chars.count > 7 {
+                result += "-"
+                for i in 7..<min(chars.count, 9) {
+                    result.append(chars[i])
+                }
+            }
+            if chars.count > 9 {
+                result += "-"
+                for i in 9..<min(chars.count, 11) {
+                    result.append(chars[i])
+                }
+            }
+            return result
         }
-        return result
-    }
     
     private func isValidPhone(_ value: String) -> Bool {
         let digits = value.filter { $0.isNumber }

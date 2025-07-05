@@ -4,6 +4,7 @@ struct PrimaryButton: View {
     let title: String
     let enabled: Bool
     let action: () -> Void
+    
     var body: some View {
         Button(action: action) {
             Text(title)
@@ -17,53 +18,107 @@ struct PrimaryButton: View {
     }
 }
 
-struct CodeTextField: View {
-    @Binding var text: String
-    var focused: FocusState<Bool>.Binding
-    var body: some View {
-        TextField("", text: $text)
-            .keyboardType(.numberPad)
-            .multilineTextAlignment(.center)
-            .frame(width: 48, height: 48)
-            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.4)))
-            .focused(focused)
-    }
-}
 
-struct ErrorText: View {
-    let error: String?
+struct InputLabel: View {
+    let title: String
+    let required: Bool
+
     var body: some View {
-        if let error = error {
-            Text(error)
-                .foregroundColor(.red)
-                .font(.system(size: 14))
+        HStack(alignment: .center, spacing: 4) {
+            Text(title)
+                .font(.system(size: 14, design: .default))
+                .foregroundColor(.secondaryInput)
+            if required {
+                Text("*")
+                    .font(.system(size: 12 , design: .default))
+                    .foregroundColor(.secondary)
+            }
         }
     }
 }
 
+//struct InputField: View {
+//    let title: String
+//    let required: Bool
+//    @Binding var text: String
+//    
+//    var body: some View {
+//        VStack(alignment: .leading, spacing: 4) {
+//            InputLabel(title: title, required: required)
+//            
+//            TextField("+7", text: $text)
+//                .keyboardType(.phonePad)
+//                .padding()
+//                .background(
+//                    RoundedRectangle(cornerRadius: 10)
+//                        .stroke(Color.gray.opacity(0.4))
+//                )
+//        }
+//    }
+//}
+//
 struct InputField: View {
     let title: String
     let required: Bool
     @Binding var text: String
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            HStack(alignment: .center, spacing: 4) {
-                Text(title)
-                    .font(.system(size: 14, design: .default))
-                    .foregroundColor(.secondaryInput)
-                if required {
-                    Text("*")
-                        .font(.system(size: 12 , design: .default))
-                        .foregroundColor(.secondary)
-                }
-            }
-            TextField("+7", text: $text)
-                .keyboardType(.phonePad)
+            Text(title + (required ? " *" : ""))
+                .foregroundColor(.gray)
+                .font(.subheadline)
+
+            TextField("", text: $text)
+                .keyboardType(.numberPad)
                 .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray.opacity(0.4))
-                )
+                .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray.opacity(0.4)))
         }
+    }
+}
+
+
+//MARK: - TextStyles modifiers
+struct CardModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .background(Color.white)
+            .cornerRadius(24)
+            .shadow(radius: 8)
+    }
+}
+
+extension View {
+    func cardStyle() -> some View {
+        self.modifier(CardModifier())
+    }
+}
+
+struct TitleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 28, weight: .bold, design: .default))
+            .foregroundColor(.primaryBold)
+    }
+}
+
+
+extension View {
+    func titleStyle() -> some View {
+        self.modifier(TitleModifier())
+    }
+}
+
+struct PrimaryModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(Color.primaryBold)
+            .font(.system(size: 16))
+
+    }
+}
+
+extension View {
+    func primaryModifier() -> some View {
+        self.modifier(PrimaryModifier())
     }
 }

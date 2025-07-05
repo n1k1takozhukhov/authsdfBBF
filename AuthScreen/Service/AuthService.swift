@@ -19,7 +19,7 @@ final class AuthService {
     
     func verifyCode(_ code: String, completion: @escaping (Result<Void, Error>) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if code == "1234" {
+            if code == "12345" {
                 completion(.success(()))
             } else {
                 completion(.failure(AuthError.invalidCode))

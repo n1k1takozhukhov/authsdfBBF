@@ -7,23 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D3B60592E186B6500632E3B /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3B60582E186B6500632E3B /* LoadingView.swift */; };
 		8D96A5112E15BEA700846ECE /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D96A5102E15BEA700846ECE /* AuthService.swift */; };
 		8D96A5132E15C6E300846ECE /* reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D96A5122E15C6E300846ECE /* reusable.swift */; };
-		8D9CFC912E1584D8004F415B /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9CFC902E1584D8004F415B /* UIColor.swift */; };
+		8D9CFC912E1584D8004F415B /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9CFC902E1584D8004F415B /* TextStyle.swift */; };
 		8D9CFC932E15B46E004F415B /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9CFC922E15B46E004F415B /* AuthState.swift */; };
 		8D9CFC952E15B503004F415B /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9CFC942E15B503004F415B /* AuthViewModel.swift */; };
 		8D9CFC982E15B968004F415B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9CFC972E15B968004F415B /* LoginView.swift */; };
 		8DE071FE2E156CF900D41982 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DE071F72E156CF900D41982 /* Preview Assets.xcassets */; };
 		8DE071FF2E156CF900D41982 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DE071F92E156CF900D41982 /* Assets.xcassets */; };
 		8DE072002E156CF900D41982 /* AuthScreenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE071FA2E156CF900D41982 /* AuthScreenApp.swift */; };
-		8DE072022E156CF900D41982 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE071FC2E156CF900D41982 /* LoadingView.swift */; };
 		8DE072082E15795E00D41982 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE072072E15795E00D41982 /* Background.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D3B60582E186B6500632E3B /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		8D96A5102E15BEA700846ECE /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8D96A5122E15C6E300846ECE /* reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reusable.swift; sourceTree = "<group>"; };
-		8D9CFC902E1584D8004F415B /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		8D9CFC902E1584D8004F415B /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		8D9CFC922E15B46E004F415B /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
 		8D9CFC942E15B503004F415B /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		8D9CFC972E15B968004F415B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -31,7 +32,6 @@
 		8DE071F72E156CF900D41982 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8DE071F92E156CF900D41982 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DE071FA2E156CF900D41982 /* AuthScreenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScreenApp.swift; sourceTree = "<group>"; };
-		8DE071FC2E156CF900D41982 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		8DE072072E15795E00D41982 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -51,6 +51,7 @@
 			children = (
 				8D9CFC972E15B968004F415B /* LoginView.swift */,
 				8D96A5122E15C6E300846ECE /* reusable.swift */,
+				8D3B60582E186B6500632E3B /* LoadingView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -113,7 +114,6 @@
 			isa = PBXGroup;
 			children = (
 				8DE072062E15794900D41982 /* styles */,
-				8DE071FC2E156CF900D41982 /* LoadingView.swift */,
 				8D9CFC962E15B8FA004F415B /* Login */,
 			);
 			path = View;
@@ -131,7 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				8DE072072E15795E00D41982 /* Background.swift */,
-				8D9CFC902E1584D8004F415B /* UIColor.swift */,
+				8D9CFC902E1584D8004F415B /* TextStyle.swift */,
 			);
 			path = styles;
 			sourceTree = "<group>";
@@ -214,10 +214,10 @@
 				8D96A5132E15C6E300846ECE /* reusable.swift in Sources */,
 				8D9CFC932E15B46E004F415B /* AuthState.swift in Sources */,
 				8D9CFC952E15B503004F415B /* AuthViewModel.swift in Sources */,
-				8DE072022E156CF900D41982 /* LoadingView.swift in Sources */,
 				8DE072082E15795E00D41982 /* Background.swift in Sources */,
-				8D9CFC912E1584D8004F415B /* UIColor.swift in Sources */,
+				8D9CFC912E1584D8004F415B /* TextStyle.swift in Sources */,
 				8D96A5112E15BEA700846ECE /* AuthService.swift in Sources */,
+				8D3B60592E186B6500632E3B /* LoadingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +348,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AuthScreen/Preview Content\"";
@@ -378,6 +379,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AuthScreen/Preview Content\"";
