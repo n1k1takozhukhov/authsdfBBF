@@ -47,5 +47,5 @@ AuthScreen/
 
 
 
-https://github.com/user-attachments/assets/ff5fa156-a1d6-499e-a1b0-8ae5d8167ec5
+https://github.com/user-attachments/assets/c0414826-9b70-40c5-970c-d1c92dae8b99
 
