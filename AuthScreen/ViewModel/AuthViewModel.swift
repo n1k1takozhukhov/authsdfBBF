@@ -8,8 +8,8 @@ class AuthViewModel: ObservableObject {
     
     // MARK: - Phone
     func updatePhone(_ value: String) {
-        state.phoneNumber = formatPhone(value)
-        state.isPhoneNumberValid = isValidPhone(state.phoneNumber)
+        state.phoneNumber = value
+        state.isPhoneNumberValid = isValidPhone(value)
     }
     
     func nextFromPhone() {
@@ -88,49 +88,9 @@ class AuthViewModel: ObservableObject {
     }
     
     // MARK: - Utils
-    // ... existing code ...
-        private func formatPhone(_ value: String) -> String {
-            // Маска +7 XXX XXX-XX-XX
-            let digits = value.filter { $0.isNumber }
-            let limitedDigits: String
-            if digits.hasPrefix("7") {
-                limitedDigits = String(digits.prefix(11))
-            } else if digits.hasPrefix("8") {
-                limitedDigits = "7" + String(digits.dropFirst().prefix(10))
-            } else {
-                limitedDigits = "7" + String(digits.prefix(10))
-            }
-            var result = "+7"
-            let chars = Array(limitedDigits)
-            if chars.count > 1 {
-                result += " "
-                for i in 1..<min(chars.count, 4) {
-                    result.append(chars[i])
-                }
-            }
-            if chars.count > 4 {
-                result += " "
-                for i in 4..<min(chars.count, 7) {
-                    result.append(chars[i])
-                }
-            }
-            if chars.count > 7 {
-                result += "-"
-                for i in 7..<min(chars.count, 9) {
-                    result.append(chars[i])
-                }
-            }
-            if chars.count > 9 {
-                result += "-"
-                for i in 9..<min(chars.count, 11) {
-                    result.append(chars[i])
-                }
-            }
-            return result
-        }
     
     private func isValidPhone(_ value: String) -> Bool {
         let digits = value.filter { $0.isNumber }
-        return digits.count == 11 && digits.first == "7"
+        return digits.count == 11
     }
 }

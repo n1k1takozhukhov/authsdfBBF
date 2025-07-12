@@ -37,26 +37,6 @@ struct InputLabel: View {
     }
 }
 
-//struct InputField: View {
-//    let title: String
-//    let required: Bool
-//    @Binding var text: String
-//    
-//    var body: some View {
-//        VStack(alignment: .leading, spacing: 4) {
-//            InputLabel(title: title, required: required)
-//            
-//            TextField("+7", text: $text)
-//                .keyboardType(.phonePad)
-//                .padding()
-//                .background(
-//                    RoundedRectangle(cornerRadius: 10)
-//                        .stroke(Color.gray.opacity(0.4))
-//                )
-//        }
-//    }
-//}
-//
 struct InputField: View {
     let title: String
     let required: Bool
@@ -73,6 +53,70 @@ struct InputField: View {
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray.opacity(0.4)))
         }
+    }
+}
+
+struct PhoneInputField: View {
+    let title: String
+    let required: Bool
+    @Binding var text: String
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title + (required ? " *" : ""))
+                .foregroundColor(.gray)
+                .font(.subheadline)
+
+            TextField("+7", text: $text)
+                .keyboardType(.numberPad)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray.opacity(0.4)))
+                .onChange(of: text) { newValue in
+                    let formatted = formatPhoneNumber(newValue)
+                    if formatted != newValue {
+                        text = formatted
+                    }
+                }
+        }
+    }
+    
+    private func formatPhoneNumber(_ input: String) -> String {
+        let digits = input.filter { $0.isNumber }
+        
+        if digits.isEmpty {
+            return ""
+        }
+        
+        var phoneDigits = digits
+        if phoneDigits.hasPrefix("7") {
+            phoneDigits = String(phoneDigits.dropFirst())
+        } else if phoneDigits.hasPrefix("8") {
+            phoneDigits = String(phoneDigits.dropFirst())
+        }
+        
+        // Ограничиваем до 10 цифр
+        let limitedDigits = String(phoneDigits.prefix(10))
+        
+        // Форматируем номер
+        var formatted = "+7 "
+        
+        if limitedDigits.count > 0 {
+            formatted += limitedDigits.prefix(3)
+        }
+        
+        if limitedDigits.count > 3 {
+            formatted += " " + limitedDigits.dropFirst(3).prefix(3)
+        }
+        
+        if limitedDigits.count > 6 {
+            formatted += "-" + limitedDigits.dropFirst(6).prefix(2)
+        }
+        
+        if limitedDigits.count > 8 {
+            formatted += "-" + limitedDigits.dropFirst(8).prefix(2)
+        }
+        
+        return formatted
     }
 }
 

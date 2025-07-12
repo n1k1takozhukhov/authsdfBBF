@@ -51,7 +51,6 @@
 			children = (
 				8D9CFC972E15B968004F415B /* LoginView.swift */,
 				8D96A5122E15C6E300846ECE /* reusable.swift */,
-				8D3B60582E186B6500632E3B /* LoadingView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -113,6 +112,7 @@
 		8DE072042E156D0700D41982 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8D3B60582E186B6500632E3B /* LoadingView.swift */,
 				8DE072062E15794900D41982 /* styles */,
 				8D9CFC962E15B8FA004F415B /* Login */,
 			);

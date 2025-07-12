@@ -9,10 +9,14 @@ struct ContentView: View {
     @StateObject private var viewModel = AuthViewModel()
     @FocusState private var focusedField: Field?
     @State private var loginViewHeight: CGFloat = 0
+    @State private var keyboardHeight: CGFloat = 0
     
     var body: some View {
         ZStack {
             Background()
+                .onTapGesture {
+                    hideKeyboard()
+                }
             
             VStack(spacing: 0) {
                 GeometryReader { geo in
@@ -30,13 +34,23 @@ struct ContentView: View {
                         }
                     }
                     .background(Color.clear)
+                    .offset(y: -keyboardHeight * 0.9)
+                    .animation(.easeInOut(duration: 0.3), value: keyboardHeight)
                     
                 }
                 .frame(maxHeight: .infinity, alignment: .bottom)
             }
         }
         .ignoresSafeArea()
+        .onAppear {
+            setupKeyboardObservers()
+        }
+        .onDisappear {
+            removeKeyboardObservers()
+        }
     }
+    
+  
     
     // MARK: - Phone Input
     private var phoneInputView: some View {
@@ -44,7 +58,7 @@ struct ContentView: View {
             Text("Вход")
                 .titleStyle()
             
-            InputField(title: "Телефон", required: true, text: Binding(
+            PhoneInputField(title: "Телефон", required: true, text: Binding(
                 get: { viewModel.state.phoneNumber },
                 set: { viewModel.updatePhone($0) })
             )
@@ -96,12 +110,27 @@ struct ContentView: View {
                 ForEach(0..<5, id: \ .self) { i in
                     TextField("", text: Binding(
                         get: { viewModel.state.code[i] },
-                        set: { viewModel.updateCode(at: i, value: $0) }
+                        set: { newValue in
+                            let oldValue = viewModel.state.code[i]
+                            viewModel.updateCode(at: i, value: newValue)
+                            
+                            if newValue.count > oldValue.count && i < 4 {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    focusedField = .code(i + 1)
+                                }
+                            }
+                            else if newValue.count < oldValue.count && i > 0 {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    focusedField = .code(i - 1)
+                                }
+                            }
+                        }
                     ))
                     .keyboardType(.numberPad)
                     .multilineTextAlignment(.center)
                     .frame(width: 56, height: 48)
                     .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.4)))
+                    .focused($focusedField, equals: .code(i))
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -160,6 +189,9 @@ struct ContentView: View {
         .cornerRadius(24)
         .shadow(radius: 8)
         .cardStyle()
+        .onAppear {
+            focusedField = .code(0)
+        }
     }
     
     
@@ -167,13 +199,13 @@ struct ContentView: View {
     private var starImage: some View {
         let imageName: String = {
             if viewModel.state.phase == .codeInput {
-                return "starWinks" //starWinks
+                return "starWinks"
             } else if viewModel.state.isPhoneNumberValid {
-                return "starSleep" //starCenter
+                return "starSleep"
             } else if focusedField == .phone {
-                return "starRight" //starRight
+                return "starRight"
             } else {
-                return "starCenter" //starSleep
+                return "starCenter"
             }
         }()
         return Image(imageName)
@@ -182,6 +214,37 @@ struct ContentView: View {
             .animation(.easeInOut, value: imageName)
             .offset(y: -142)
         
+    }
+    
+    // MARK: - Keyboard Handling
+    private func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardWillShowNotification,
+            object: nil,
+            queue: .main
+        ) { notification in
+            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                keyboardHeight = keyboardFrame.height
+            }
+        }
+        
+        NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardWillHideNotification,
+            object: nil,
+            queue: .main
+        ) { _ in
+            keyboardHeight = 0
+        }
+    }
+    
+    private func removeKeyboardObservers() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func hideKeyboard() {
+        focusedField = nil
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 

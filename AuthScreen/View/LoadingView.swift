@@ -16,7 +16,7 @@ struct RootView: View {
                 LoadingView()
                     .transition(.opacity)
             } else {
-                ContentView() // основной экран авторизации
+                ContentView()
             }
         }
         .onAppear {
