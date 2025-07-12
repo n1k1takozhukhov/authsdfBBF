@@ -1,3 +1,5 @@
+
+https://github.com/user-attachments/assets/db130a5d-0b3c-4041-b75f-2eb9e29d0ed6
 # AuthScreen iOS App
 
 ## Архитектурный подход
@@ -47,5 +49,4 @@ AuthScreen/
 
 
 
-https://github.com/user-attachments/assets/c0414826-9b70-40c5-970c-d1c92dae8b99
-
+Uploading ScreenRecording_07-12-2025 12-48-26_1-2.mp4…
