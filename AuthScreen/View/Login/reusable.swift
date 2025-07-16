@@ -67,7 +67,7 @@ struct PhoneInputField: View {
                 .foregroundColor(.gray)
                 .font(.subheadline)
 
-            TextField(NSLocalizedString("phone_placeholder", comment: ""), text: $text)
+            TextField("+7", text: $text)
                 .keyboardType(.numberPad)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray.opacity(0.4)))

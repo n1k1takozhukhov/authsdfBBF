@@ -200,7 +200,7 @@ struct ContentView: View {
             } else if viewModel.state.isPhoneNumberValid {
                 return "starSleep"
             } else if focusedField == .phone {
-                return "starRight"
+                return "starCenter"
             } else {
                 return "starCenter"
             }
