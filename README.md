@@ -46,6 +46,4 @@ AuthScreen/
 - **Foundation** - для базовой функциональности
 
 
-
-
-https://github.com/user-attachments/assets/db130a5d-0b3c-4041-b75f-2eb9e29d0ed6
+https://github.com/user-attachments/assets/d305a3f0-7e18-4595-915a-0b938b3a21f0
