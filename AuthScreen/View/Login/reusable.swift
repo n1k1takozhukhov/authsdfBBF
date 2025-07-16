@@ -45,7 +45,7 @@ struct InputField: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title + (required ? " *" : ""))
-                .foregroundColor(.gray)
+                .foregroundColor(.primaryBold)
                 .font(.subheadline)
 
             TextField("", text: $text)

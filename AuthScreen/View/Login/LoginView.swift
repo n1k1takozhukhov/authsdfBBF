@@ -99,7 +99,7 @@ struct ContentView: View {
             
             Text("code_sent_message")
             + Text("\(viewModel.state.phoneNumber)")
-                .foregroundColor(Color.primaryBold)
+                .foregroundColor(.primaryBold)
                 .font(.system(size: 16))
             
             InputLabel(title: NSLocalizedString("enter_code_label", comment: ""), required: true)
