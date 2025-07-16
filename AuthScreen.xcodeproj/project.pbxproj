@@ -14,6 +14,7 @@
 		8D9CFC932E15B46E004F415B /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9CFC922E15B46E004F415B /* AuthState.swift */; };
 		8D9CFC952E15B503004F415B /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9CFC942E15B503004F415B /* AuthViewModel.swift */; };
 		8D9CFC982E15B968004F415B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9CFC972E15B968004F415B /* LoginView.swift */; };
+		8DD2280E2E27EE5F0019980B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DD2280C2E27EE5F0019980B /* Localizable.strings */; };
 		8DE071FE2E156CF900D41982 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DE071F72E156CF900D41982 /* Preview Assets.xcassets */; };
 		8DE071FF2E156CF900D41982 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DE071F92E156CF900D41982 /* Assets.xcassets */; };
 		8DE072002E156CF900D41982 /* AuthScreenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE071FA2E156CF900D41982 /* AuthScreenApp.swift */; };
@@ -28,6 +29,8 @@
 		8D9CFC922E15B46E004F415B /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
 		8D9CFC942E15B503004F415B /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		8D9CFC972E15B968004F415B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		8DD2280D2E27EE5F0019980B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8DD2280F2E27EE610019980B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8DE071E42E15649C00D41982 /* AuthScreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthScreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DE071F72E156CF900D41982 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8DE071F92E156CF900D41982 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				8D96A5102E15BEA700846ECE /* AuthService.swift */,
+				8DD2280C2E27EE5F0019980B /* Localizable.strings */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -179,6 +183,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 8DE071DB2E15649C00D41982;
 			minimizedProjectReferenceProxies = 1;
@@ -198,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DE071FE2E156CF900D41982 /* Preview Assets.xcassets in Resources */,
+				8DD2280E2E27EE5F0019980B /* Localizable.strings in Resources */,
 				8DE071FF2E156CF900D41982 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,6 +228,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8DD2280C2E27EE5F0019980B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DD2280D2E27EE5F0019980B /* en */,
+				8DD2280F2E27EE610019980B /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		8DE071F02E15649E00D41982 /* Debug */ = {
@@ -355,6 +373,7 @@
 				DEVELOPMENT_TEAM = V36RW5TG62;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StarApp;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -386,6 +405,7 @@
 				DEVELOPMENT_TEAM = V36RW5TG62;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StarApp;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

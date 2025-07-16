@@ -3,8 +3,10 @@ import Combine
 
 class AuthViewModel: ObservableObject {
     @Published var state = AuthState()
+    
     private var timerCancellable: AnyCancellable?
     private let service = AuthService.shared
+    private var targetDate: Date?
     
     // MARK: - Phone
     func updatePhone(_ value: String) {
@@ -26,7 +28,7 @@ class AuthViewModel: ObservableObject {
                 switch result {
                 case .success:
                     print("[Auth] Код успешно отправлен")
-                    self?.startTimer()
+                    self?.startTimer(seconds: 30)
                 case .failure(let error):
                     print("[Auth] Ошибка отправки кода: \(error.localizedDescription)")
                     self?.state.error = error.localizedDescription
@@ -35,11 +37,36 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    //MARK: - Register
-    func registerButton() {
-        print("Зарегистрироваться")
+    func resendCode() {
+        print("[Auth] Повторная отправка кода на номер: \(state.phoneNumber)")
+        state.code = Array(repeating: "", count: 5)
+        state.error = nil
+        sendCode()
     }
-    
+
+    // MARK: - Timer
+    private func startTimer(seconds: Int) {
+        timerCancellable?.cancel()
+        
+        targetDate = Date().addingTimeInterval(TimeInterval(seconds))
+        state.canResendCode = false
+        
+        timerCancellable = Timer
+            .publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self, let target = self.targetDate else { return }
+                let remaining = Int(target.timeIntervalSinceNow)
+                
+                if remaining > 0 {
+                    self.state.timer = remaining
+                } else {
+                    self.state.timer = 0
+                    self.state.canResendCode = true
+                    self.timerCancellable?.cancel()
+                }
+            }
+    }
     
     // MARK: - Code
     func updateCode(at index: Int, value: String) {
@@ -49,7 +76,7 @@ class AuthViewModel: ObservableObject {
         state.isCodeValid = state.code.joined().count == 5
         state.error = nil
     }
-    
+
     func verifyCode() {
         let code = state.code.joined()
         print("[Auth] Проверка кода: \(code)")
@@ -62,33 +89,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func resendCode() {
-        print("[Auth] Повторная отправка кода на номер: \(state.phoneNumber)")
-        state.code = Array(repeating: "", count: 5)
-        state.error = nil
-        sendCode()
-    }
-    
-    // MARK: - Timer
-    private func startTimer() {
-        state.timer = 30
-        state.canResendCode = false
-        timerCancellable?.cancel()
-        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                if self.state.timer > 0 {
-                    self.state.timer -= 1
-                } else {
-                    self.state.canResendCode = true
-                    self.timerCancellable?.cancel()
-                }
-            }
-    }
-    
     // MARK: - Utils
-    
     private func isValidPhone(_ value: String) -> Bool {
         let digits = value.filter { $0.isNumber }
         return digits.count == 11

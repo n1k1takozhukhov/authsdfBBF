@@ -1,0 +1,10 @@
+"login_title" = "Sign In";
+"phone_label" = "Phone";
+"next_button" = "Next";
+"first_time_here" = "First time here?";
+"register_button" = "Register";
+"code_sent_message" = "We sent you a confirmation code to\nnumber ";
+"enter_code_label" = "Enter code";
+"error_message" = "An error occurred";
+"resend_code_button" = "Resend code";
+"phone_placeholder" = "+1";

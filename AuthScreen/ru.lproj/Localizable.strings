@@ -1,0 +1,10 @@
+"login_title" = "Вход";
+"phone_label" = "Телефон";
+"next_button" = "Далее";
+"first_time_here" = "Впервые тут?";
+"register_button" = "Зарегистрироваться";
+"code_sent_message" = "Мы выслали вам код подтверждения на\nномер ";
+"enter_code_label" = "Введите код";
+"error_message" = "Тут какая-то ошибка";
+"resend_code_button" = "Отправить код повторно";
+"phone_placeholder" = "+7";

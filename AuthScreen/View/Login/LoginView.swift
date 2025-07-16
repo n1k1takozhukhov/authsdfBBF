@@ -8,75 +8,69 @@ enum Field: Hashable {
 struct ContentView: View {
     @StateObject private var viewModel = AuthViewModel()
     @FocusState private var focusedField: Field?
-    @State private var loginViewHeight: CGFloat = 0
     @State private var keyboardHeight: CGFloat = 0
     
     var body: some View {
         ZStack {
             Background()
+                .ignoresSafeArea()
                 .onTapGesture {
                     hideKeyboard()
                 }
             
             VStack(spacing: 0) {
-                GeometryReader { geo in
-                    
-                    VStack(spacing: 0) {
-                        Spacer()
-
-                        starImage
-                            .padding(.bottom, -40)
-                        
-                        if viewModel.state.phase == .phoneInput {
-                            phoneInputView
-                        } else {
-                            codeInputView
-                        }
+                Spacer(minLength: 0)
+                
+                starImage
+                    .frame(height: 236)
+                    .padding(40)
+                
+                Spacer()
+                
+                Group {
+                    if viewModel.state.phase == .phoneInput {
+                        phoneInputView
+                    } else {
+                        codeInputView
                     }
-                    .background(Color.clear)
-                    .offset(y: -keyboardHeight * 0.9)
-                    .animation(.easeInOut(duration: 0.3), value: keyboardHeight)
-                    
                 }
-                .frame(maxHeight: .infinity, alignment: .bottom)
+                .offset(y: -keyboardHeight * 0.9)
+                .animation(.easeInOut(duration: 0.3), value: keyboardHeight)
             }
-        }
-        .ignoresSafeArea()
-        .onAppear {
-            setupKeyboardObservers()
-        }
-        .onDisappear {
-            removeKeyboardObservers()
+            .ignoresSafeArea(edges: .bottom)
+            
+            .onAppear { setupKeyboardObservers() }
+            .onDisappear { removeKeyboardObservers() }
         }
     }
     
-  
+    
     
     // MARK: - Phone Input
     private var phoneInputView: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Вход")
+            Text("login_title")
                 .titleStyle()
             
-            PhoneInputField(title: "Телефон", required: true, text: Binding(
+            PhoneInputField(title: NSLocalizedString("phone_label", comment: ""), required: true, text: Binding(
                 get: { viewModel.state.phoneNumber },
                 set: { viewModel.updatePhone($0) })
             )
             .focused($focusedField, equals: .phone)
             
-            PrimaryButton(title: "Далее", enabled: viewModel.state.isPhoneNumberValid) {
+            PrimaryButton(title: NSLocalizedString("next_button", comment: ""), enabled: viewModel.state.isPhoneNumberValid) {
                 viewModel.nextFromPhone()
                 focusedField = nil
             }
             
             HStack(alignment: .center, spacing: 8) {
                 
-                Text("Впервые тут?")
+                Text("first_time_here")
                     .foregroundColor(.gray)
-                Button("Зарегистрироваться") {
+                Button("register_button") {
                     
                     // TODO: Навигация на регистрацию
-                    viewModel.registerButton()
+//                    $viewModel.registerButton
                 }
                 .foregroundColor(.orange)
             }
@@ -89,22 +83,26 @@ struct ContentView: View {
         .background(Color.white)
         .cornerRadius(24)
         .shadow(radius: 8)
-        .onAppear { focusedField = .phone }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                focusedField = .phone
+            }
+        }
         .cardStyle()
     }
     
     // MARK: - Code Input
     private var codeInputView: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Вход")
+            Text("login_title")
                 .titleStyle()
             
-            Text("Мы выслали вам код подтверждения на \nномер ")
+            Text("code_sent_message")
             + Text("\(viewModel.state.phoneNumber)")
                 .foregroundColor(Color.primaryBold)
                 .font(.system(size: 16))
             
-            InputLabel(title: "Введите код", required: true)
+            InputLabel(title: NSLocalizedString("enter_code_label", comment: ""), required: true)
             
             HStack(spacing: 20) {
                 ForEach(0..<5, id: \ .self) { i in
@@ -135,7 +133,7 @@ struct ContentView: View {
             }
             .frame(maxWidth: .infinity, alignment: .center)
             
-            PrimaryButton(title: "Далее", enabled: viewModel.state.isCodeValid) {
+            PrimaryButton(title: NSLocalizedString("next_button", comment: ""), enabled: viewModel.state.isCodeValid) {
                 viewModel.verifyCode()
             }
             
@@ -149,7 +147,7 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity, maxHeight: 46)
                             .foregroundColor(Color.red)
                         
-                        Text("Тут какаято ошибка")
+                        Text("error_message")
                             .font(.system(size: 14))
                             .foregroundColor(.white)
                     }
@@ -162,7 +160,7 @@ struct ContentView: View {
             }
             
             if viewModel.state.canResendCode {
-                Button("Отправить код повторно") {
+                Button("resend_code_button") {
                     viewModel.resendCode()
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -174,8 +172,7 @@ struct ContentView: View {
                     let minutes = viewModel.state.timer / 60
                     let seconds = viewModel.state.timer % 60
                     
-                    Text(String(format: "%d:%02d", minutes, seconds))
-                    + Text(" Отправить код повторно")
+                    Text(String(format: "%d:%02d ", minutes, seconds)) + Text("resend_code_button")
                         .foregroundColor(Color.orangeDesing)
                         .font(.system(size: 16))
                 }
@@ -208,13 +205,13 @@ struct ContentView: View {
                 return "starCenter"
             }
         }()
+        
         return Image(imageName)
             .resizable()
             .frame(width: 236, height: 236)
-            .animation(.easeInOut, value: imageName)
-            .offset(y: -142)
-        
+            .animation(.easeInOut(duration: 0.3), value: imageName)
     }
+    
     
     // MARK: - Keyboard Handling
     private func setupKeyboardObservers() {
